@@ -12,38 +12,30 @@ void MyGlDraw(void)
     //*************************************************************************
     // Chame aqui as funções do mygl.h
     //*************************************************************************
-    
+
     DrawLine(Point(0,0), Point(255,255), RED);
-    
-    DrawTriangle(Point(100,100),Point(200,200),Point(150,150), GREEN);
+
+    DrawTriangle(Point(350,0), Point(250,125), Point(350,100), GREEN);
 }
 
 void PutPixel(Point p, Color c) {
-    
-    int x = p.x;
-    int y = p.y;
-    int red = c.red;
-    int green = c.green;
-    int blue = c.blue;
-    int alpha = c.alpha;
-    
+
     // Calcula o índice do pixel na matriz de pixels:
-    int pixelIndex = (x + y * IMAGE_WIDTH) * 4;
+    int pixelIndex = (p.x + p.y * IMAGE_WIDTH) * 4;
 
     // Escreve os componentes de cor na posição correta do pixel:
-    FBptr[pixelIndex] = red;
-    FBptr[pixelIndex + 1] = green;
-    FBptr[pixelIndex + 2] = blue;
-    FBptr[pixelIndex + 3] = alpha;
+    FBptr[pixelIndex] = c.red;
+    FBptr[pixelIndex + 1] = c.green;
+    FBptr[pixelIndex + 2] = c.blue;
+    FBptr[pixelIndex + 3] = c.alpha;
 }
 
 void DrawLine(Point p0, Point p1, Color color)
 {
-
-	int x0 = p0.x;
-	int y0 = p0.y;
-	int x1 = p1.x;
-	int y1 = p1.y;
+    int x0 = p0.x;
+    int y0 = p0.y;
+    int x1 = p1.x;
+    int y1 = p1.y;
 
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
@@ -52,12 +44,12 @@ void DrawLine(Point p0, Point p1, Color color)
     int error = dx - dy;
     int x = x0;
     int y = y0;
-    
+
     while (x != x1 || y != y1) {
-    		
-		PutPixel(Point(x, y), color);
-		
-		//Atualiza o Erro
+
+	PutPixel(Point(x, y), color);
+
+	//Atualiza o Erro
         int newError = 2 * error;
         if (newError > -dy) {
             error -= dy;
